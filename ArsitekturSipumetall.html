@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arsitektur SIPUMETAL - Sistem Informasi Pengendalian Unit Metrologi Legal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .flowchart-box {
+            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 8px;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+        }
+        .flowchart-decision {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 8px auto;
+            text-align: center;
+            font-weight: 500;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(245, 158, 11, 0.3);
+        }
+        .flowchart-start {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 50px;
+        }
+        .flowchart-end {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-radius: 50px;
+        }
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #6b7280;
+            margin: 4px auto;
+        }
+        .arrow-right {
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 12px solid #6b7280;
+            margin: 8px;
+        }
+        .architecture-layer {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+            background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+        }
+        .component-box {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .data-flow {
+            border: 2px dashed #3b82f6;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(59, 130, 246, 0.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen py-8 px-4">
+    <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="glass-effect rounded-2xl shadow-2xl p-8 mb-8">
+        <div class="text-center">
+            <div class="w-20 h-20 mx-auto mb-4">
+                <img src="https://i.imgur.com/IgslQke.png" alt="Logo Unit Metrologi" class="w-20 h-20 object-contain mx-auto">
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">Arsitektur SIPUMETAL</h1>
+            <p class="text-xl text-gray-600">Sistem Informasi Pengendalian Unit Metrologii Legal</p>
+        </div>
+    </div>
+</div>
+
+
+
+        <!-- Navigation Tabs -->
+        <div class="glass-effect rounded-xl mb-8">
+            <div class="flex border-b border-gray-200">
+                <button class="tab-button active px-6 py-4 font-medium text-blue-600 border-b-2 border-blue-600" data-tab="overview">
+                    📋 Overview Sistem
+                </button>
+                <button class="tab-button px-6 py-4 font-medium text-gray-500 hover:text-gray-700" data-tab="architecture">
+                    🏗️ Arsitektur Teknis
+                </button>
+                <button class="tab-button px-6 py-4 font-medium text-gray-500 hover:text-gray-700" data-tab="flowchart">
+                    📊 Flowchart Proses
+                </button>
+                <button class="tab-button px-6 py-4 font-medium text-gray-500 hover:text-gray-700" data-tab="database">
+                    🗄️ Struktur Database
+                </button>
+                <button class="tab-button px-6 py-4 font-medium text-gray-500 hover:text-gray-700" data-tab="security">
+                    🔒 Keamanan Sistem
+                </button>
+            </div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div id="overview" class="tab-content">
+            <div class="glass-effect rounded-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">📋 Overview Sistem UML</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- System Description -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Deskripsi Sistem</h3>
+                        <div class="space-y-4">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-blue-900 mb-2">🎯 Tujuan Utama</h4>
+                                <p class="text-blue-800 text-sm">Sistem informasi terintegrasi untuk pengelolaan Unit Metrologi Legal di seluruh Indonesia, memfasilitasi pendaftaran, verifikasi, dan monitoring SUML.</p>
+                            </div>
+                            
+                            <div class="bg-green-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-green-900 mb-2">👥 Target Pengguna</h4>
+                                <ul class="text-green-800 text-sm space-y-1">
+                                    <li>• Pemerintah Daerah (Kabupaten/Kota)</li>
+                                    <li>• Dinas Perdagangan & Perindustrian</li>
+                                    <li>• Petugas UML & Metrologi</li>
+                                    <li>• Administrator Sistem Pusat</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <h4 class="font-medium text-purple-900 mb-2">⚡ Fitur Utama</h4>
+                                <ul class="text-purple-800 text-sm space-y-1">
+                                    <li>• Pendaftaran UML Online</li>
+                                    <li>• Dashboard Monitoring Real-time</li>
+                                    <li>• Manajemen Data SUML</li>
+                                    <li>• Sistem Pelaporan Terintegrasi</li>
+                                    <li>• Verifikasi Email Pemerintah</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technical Stack -->
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">🛠️ Technology Stack</h3>
+                        <div class="space-y-4">
+                            <div class="component-box">
+                                <h4 class="font-medium text-gray-900 mb-2">Frontend</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">HTML5</span>
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">CSS3</span>
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">JavaScript ES6+</span>
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Tailwind CSS</span>
+                                </div>
+                            </div>
+                            
+                            <div class="component-box">
+                                <h4 class="font-medium text-gray-900 mb-2">Backend (Recommended)</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Node.js</span>
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Express.js</span>
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">JWT Auth</span>
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Nodemailer</span>
+                                </div>
+                            </div>
+                            
+                            <div class="component-box">
+                                <h4 class="font-medium text-gray-900 mb-2">Database</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">PostgreSQL</span>
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Redis Cache</span>
+                                </div>
+                            </div>
+                            
+                            <div class="component-box">
+                                <h4 class="font-medium text-gray-900 mb-2">Infrastructure</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Docker</span>
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">Nginx</span>
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">SSL/TLS</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Architecture Tab -->
+        <div id="architecture" class="tab-content hidden">
+            <div class="glass-effect rounded-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">🏗️ Arsitektur Sistem UML</h2>
+                
+                <!-- System Architecture Diagram -->
+                <div class="architecture-layer">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">🌐 Presentation Layer (Frontend)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="component-box">
+                            <h4 class="font-medium text-blue-600 mb-2">Landing Page</h4>
+                            <p class="text-sm text-gray-600">Halaman utama dengan informasi UML dan pilihan akses sistem</p>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-blue-600 mb-2">Registration Form</h4>
+                            <p class="text-sm text-gray-600">Form pendaftaran UML dengan validasi email pemerintah</p>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-blue-600 mb-2">Login System</h4>
+                            <p class="text-sm text-gray-600">Autentikasi dengan email resmi pemerintah daerah</p>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-blue-600 mb-2">Dashboard</h4>
+                            <p class="text-sm text-gray-600">Interface utama untuk manajemen data SUML</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow"></div>
+
+                <div class="architecture-layer">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">⚙️ Application Layer (Backend)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="component-box">
+                            <h4 class="font-medium text-green-600 mb-2">Authentication Service</h4>
+                            <ul class="text-sm text-gray-600 text-left">
+                                <li>• JWT Token Management</li>
+                                <li>• Email Domain Validation</li>
+                                <li>• Session Management</li>
+                                <li>• Password Encryption</li>
+                            </ul>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-green-600 mb-2">UML Management API</h4>
+                            <ul class="text-sm text-gray-600 text-left">
+                                <li>• CRUD Operations</li>
+                                <li>• Data Validation</li>
+                                <li>• File Upload Handler</li>
+                                <li>• Report Generation</li>
+                            </ul>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-green-600 mb-2">Notification Service</h4>
+                            <ul class="text-sm text-gray-600 text-left">
+                                <li>• Email Verification</li>
+                                <li>• Status Notifications</li>
+                                <li>• Reminder System</li>
+                                <li>• Alert Management</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow"></div>
+
+                <div class="architecture-layer">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">🗄️ Data Layer</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="component-box">
+                            <h4 class="font-medium text-purple-600 mb-2">PostgreSQL Database</h4>
+                            <ul class="text-sm text-gray-600 text-left">
+                                <li>• User Management</li>
+                                <li>• UML Registration Data</li>
+                                <li>• SUML Inventory</li>
+                                <li>• Audit Logs</li>
+                                <li>• System Configuration</li>
+                            </ul>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-purple-600 mb-2">Redis Cache</h4>
+                            <ul class="text-sm text-gray-600 text-left">
+                                <li>• Session Storage</li>
+                                <li>• Temporary Data</li>
+                                <li>• Rate Limiting</li>
+                                <li>• Performance Optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="arrow"></div>
+
+                <div class="architecture-layer">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">🔧 Infrastructure Layer</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="component-box">
+                            <h4 class="font-medium text-orange-600 mb-2">Web Server</h4>
+                            <p class="text-sm text-gray-600">Nginx dengan SSL/TLS untuk keamanan komunikasi</p>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-orange-600 mb-2">Application Server</h4>
+                            <p class="text-sm text-gray-600">Node.js dengan PM2 untuk process management</p>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-orange-600 mb-2">Database Server</h4>
+                            <p class="text-sm text-gray-600">PostgreSQL dengan backup otomatis</p>
+                        </div>
+                        <div class="component-box">
+                            <h4 class="font-medium text-orange-600 mb-2">Monitoring</h4>
+                            <p class="text-sm text-gray-600">Log management dan system monitoring</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Flowchart Tab -->
+        <div id="flowchart" class="tab-content hidden">
+            <div class="glass-effect rounded-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">📊 Flowchart Proses Sistem</h2>
+                
+                <!-- User Registration Flow -->
+                <div class="mb-12">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">🔐 Alur Pendaftaran UML</h3>
+                    <div class="flex flex-col items-center">
+                        <div class="flowchart-box flowchart-start">Pengguna Mengakses Sistem</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-box">Pilih "Daftar UML Baru"</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-box">Mengisi Form Pendaftaran</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-decision">Email Valid (.go.id)?</div>
+                        
+                        <div class="flex items-center justify-center w-full">
+                            <div class="flex flex-col items-center w-1/2">
+                                <div class="text-red-600 font-medium mb-2">❌ Tidak</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box bg-red-500">Tampilkan Error Validasi</div>
+                            </div>
+                            <div class="flex flex-col items-center w-1/2">
+                                <div class="text-green-600 font-medium mb-2">✅ Ya</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Validasi Data SUML</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Simpan Data ke Database</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Kirim Email Verifikasi</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box flowchart-end">Redirect ke Halaman Login</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login Flow -->
+                <div class="mb-12">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">🔑 Alur Login Sistem</h3>
+                    <div class="flex flex-col items-center">
+                        <div class="flowchart-box flowchart-start">Pengguna di Halaman Login</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-box">Input Email & Password</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-decision">Kredensial Valid?</div>
+                        
+                        <div class="flex items-center justify-center w-full">
+                            <div class="flex flex-col items-center w-1/2">
+                                <div class="text-red-600 font-medium mb-2">❌ Tidak</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box bg-red-500">Tampilkan Error Login</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Kembali ke Form Login</div>
+                            </div>
+                            <div class="flex flex-col items-center w-1/2">
+                                <div class="text-green-600 font-medium mb-2">✅ Ya</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Generate JWT Token</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Set Session Data</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box flowchart-end">Redirect ke Dashboard</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Flow -->
+                <div class="mb-12">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">📊 Alur Dashboard UML</h3>
+                    <div class="flex flex-col items-center">
+                        <div class="flowchart-box flowchart-start">User Login Berhasil</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-box">Load Dashboard Data</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-box">Tampilkan Statistik SUML</div>
+                        <div class="arrow"></div>
+                        <div class="flowchart-decision">Pilih Menu?</div>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-4">
+                            <div class="flex flex-col items-center">
+                                <div class="flowchart-box bg-blue-500">Input Data</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Form SUML Baru</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="flowchart-box bg-green-500">Laporan</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Generate Report</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="flowchart-box bg-purple-500">Pengaturan</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Konfigurasi Sistem</div>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div class="flowchart-box bg-red-500">Logout</div>
+                                <div class="arrow"></div>
+                                <div class="flowchart-box">Clear Session</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Processing Flow -->
+                <div class="mb-12">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-6">⚙️ Alur Pemrosesan Data SUML</h3>
+                    <div class="data-flow">
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+                            <div class="component-box">
+                                <h4 class="font-medium mb-2">📝 Input Data</h4>
+                                <p class="text-sm">User mengisi form data SUML</p>
+                            </div>
+                            <div class="arrow-right"></div>
+                            <div class="component-box">
+                                <h4 class="font-medium mb-2">✅ Validasi</h4>
+                                <p class="text-sm">Sistem validasi data input</p>
+                            </div>
+                            <div class="arrow-right"></div>
+                            <div class="component-box">
+                                <h4 class="font-medium mb-2">💾 Simpan</h4>
+                                <p class="text-sm">Data disimpan ke database</p>
+                            </div>
+                            <div class="arrow-right"></div>
+                            <div class="component-box">
+                                <h4 class="font-medium mb-2">📊 Update</h4>
+                                <p class="text-sm">Dashboard terupdate otomatis</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Database Tab -->
+        <div id="database" class="tab-content hidden">
+            <div class="glass-effect rounded-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">🗄️ Struktur Database Sistem UML</h2>
+                
+                <!-- Database Schema -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Users Table -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-blue-600 mb-4">👥 Tabel Users</h3>
+                        <div class="text-left space-y-2">
+                            <div class="flex justify-between border-b pb-1">
+                                <span class="font-medium">Field</span>
+                                <span class="font-medium">Type</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>id</span>
+                                <span class="text-blue-600">UUID PRIMARY KEY</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>email</span>
+                                <span class="text-blue-600">VARCHAR(255) UNIQUE</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>password_hash</span>
+                                <span class="text-blue-600">VARCHAR(255)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>nip</span>
+                                <span class="text-blue-600">VARCHAR(18)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>jabatan</span>
+                                <span class="text-blue-600">VARCHAR(100)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>is_verified</span>
+                                <span class="text-blue-600">BOOLEAN</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>created_at</span>
+                                <span class="text-blue-600">TIMESTAMP</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>updated_at</span>
+                                <span class="text-blue-600">TIMESTAMP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UML Table -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-green-600 mb-4">🏛️ Tabel UML</h3>
+                        <div class="text-left space-y-2">
+                            <div class="flex justify-between border-b pb-1">
+                                <span class="font-medium">Field</span>
+                                <span class="font-medium">Type</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>id</span>
+                                <span class="text-green-600">UUID PRIMARY KEY</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>user_id</span>
+                                <span class="text-green-600">UUID FOREIGN KEY</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>nama_dinas</span>
+                                <span class="text-green-600">VARCHAR(255)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>alamat_dinas</span>
+                                <span class="text-green-600">TEXT</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>nama_uml</span>
+                                <span class="text-green-600">VARCHAR(255)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>tempat_suml</span>
+                                <span class="text-green-600">VARCHAR(255)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>status</span>
+                                <span class="text-green-600">ENUM</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>created_at</span>
+                                <span class="text-green-600">TIMESTAMP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SUML Table -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-purple-600 mb-4">⚖️ Tabel SUML</h3>
+                        <div class="text-left space-y-2">
+                            <div class="flex justify-between border-b pb-1">
+                                <span class="font-medium">Field</span>
+                                <span class="font-medium">Type</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>id</span>
+                                <span class="text-purple-600">UUID PRIMARY KEY</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>uml_id</span>
+                                <span class="text-purple-600">UUID FOREIGN KEY</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>jenis_suml</span>
+                                <span class="text-purple-600">VARCHAR(100)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>merk_model</span>
+                                <span class="text-purple-600">VARCHAR(255)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>jumlah_unit</span>
+                                <span class="text-purple-600">INTEGER</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>status_verifikasi</span>
+                                <span class="text-purple-600">ENUM</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>tanggal_kalibrasi</span>
+                                <span class="text-purple-600">DATE</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>created_at</span>
+                                <span class="text-purple-600">TIMESTAMP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audit Logs Table -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-orange-600 mb-4">📋 Tabel Audit Logs</h3>
+                        <div class="text-left space-y-2">
+                            <div class="flex justify-between border-b pb-1">
+                                <span class="font-medium">Field</span>
+                                <span class="font-medium">Type</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>id</span>
+                                <span class="text-orange-600">UUID PRIMARY KEY</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>user_id</span>
+                                <span class="text-orange-600">UUID FOREIGN KEY</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>action</span>
+                                <span class="text-orange-600">VARCHAR(100)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>table_name</span>
+                                <span class="text-orange-600">VARCHAR(100)</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>record_id</span>
+                                <span class="text-orange-600">UUID</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>old_values</span>
+                                <span class="text-orange-600">JSONB</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>new_values</span>
+                                <span class="text-orange-600">JSONB</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>created_at</span>
+                                <span class="text-orange-600">TIMESTAMP</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Database Relationships -->
+                <div class="mt-8">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">🔗 Relasi Database</h3>
+                    <div class="data-flow">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="component-box">
+                                <h4 class="font-medium text-blue-600 mb-2">Users → UML</h4>
+                                <p class="text-sm text-gray-600">One-to-One: Setiap user memiliki satu UML</p>
+                            </div>
+                            <div class="component-box">
+                                <h4 class="font-medium text-green-600 mb-2">UML → SUML</h4>
+                                <p class="text-sm text-gray-600">One-to-Many: Satu UML memiliki banyak SUML</p>
+                            </div>
+                            <div class="component-box">
+                                <h4 class="font-medium text-orange-600 mb-2">Users → Audit Logs</h4>
+                                <p class="text-sm text-gray-600">One-to-Many: User memiliki banyak log aktivitas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Tab -->
+        <div id="security" class="tab-content hidden">
+            <div class="glass-effect rounded-xl p-8 mb-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">🔒 Keamanan Sistem UML</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Authentication Security -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-blue-600 mb-4">🔐 Keamanan Autentikasi</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Email Domain Validation</h4>
+                                    <p class="text-sm text-gray-600">Hanya email pemerintah (.go.id) yang diizinkan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Password Hashing</h4>
+                                    <p class="text-sm text-gray-600">Bcrypt dengan salt rounds 12</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">JWT Token Security</h4>
+                                    <p class="text-sm text-gray-600">Token dengan expiry time dan refresh mechanism</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Session Management</h4>
+                                    <p class="text-sm text-gray-600">Secure session dengan Redis storage</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Security -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-green-600 mb-4">🛡️ Keamanan Data</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Input Validation</h4>
+                                    <p class="text-sm text-gray-600">Validasi ketat pada semua input pengguna</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">SQL Injection Prevention</h4>
+                                    <p class="text-sm text-gray-600">Prepared statements dan parameterized queries</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">XSS Protection</h4>
+                                    <p class="text-sm text-gray-600">Content Security Policy dan input sanitization</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Data Encryption</h4>
+                                    <p class="text-sm text-gray-600">Enkripsi data sensitif at rest dan in transit</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Network Security -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-purple-600 mb-4">🌐 Keamanan Jaringan</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">HTTPS/TLS 1.3</h4>
+                                    <p class="text-sm text-gray-600">Enkripsi end-to-end untuk semua komunikasi</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Rate Limiting</h4>
+                                    <p class="text-sm text-gray-600">Pembatasan request untuk mencegah abuse</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">CORS Policy</h4>
+                                    <p class="text-sm text-gray-600">Konfigurasi CORS yang ketat untuk API</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Firewall Configuration</h4>
+                                    <p class="text-sm text-gray-600">Konfigurasi firewall untuk akses terbatas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Monitoring & Audit -->
+                    <div class="component-box">
+                        <h3 class="text-lg font-semibold text-orange-600 mb-4">📊 Monitoring & Audit</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Activity Logging</h4>
+                                    <p class="text-sm text-gray-600">Log semua aktivitas pengguna dan sistem</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Security Monitoring</h4>
+                                    <p class="text-sm text-gray-600">Deteksi anomali dan serangan keamanan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Backup & Recovery</h4>
+                                    <p class="text-sm text-gray-600">Backup otomatis dan disaster recovery plan</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mr-3 mt-0.5">
+                                    <svg class="w-3 h-3 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Compliance Audit</h4>
+                                    <p class="text-sm text-gray-600">Audit trail untuk compliance pemerintahan</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="glass-effect rounded-xl p-6 text-center">
+            <p class="text-gray-600">
+                📋 Dokumentasi Arsitektur Sistem UML - Unit Metrologi Legal Indonesia
+            </p>
+            <p class="text-sm text-gray-500 mt-2">
+                Sistem ini dirancang untuk mendukung digitalisasi pengelolaan metrologi legal di seluruh Indonesia
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetTab = this.getAttribute('data-tab');
+
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('active', 'text-blue-600', 'border-blue-600');
+                        btn.classList.add('text-gray-500');
+                    });
+
+                    // Add active class to clicked button
+                    this.classList.add('active', 'text-blue-600', 'border-blue-600');
+                    this.classList.remove('text-gray-500');
+
+                    // Hide all tab contents
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+
+                    // Show target tab content
+                    document.getElementById(targetTab).classList.remove('hidden');
+                });
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9795bc4706a1fd74',t:'MTc1NjkwNzYyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
